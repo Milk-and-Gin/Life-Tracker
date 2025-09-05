@@ -1,18 +1,10 @@
 <!DOCTYPE html>
-<!--
-  Self‑Reliance Progress Tracker – Version without “Open Learning Guide”
-  This file defines a self‑reliance tracker web app that uses sliders to assess
-  ten competencies. It automatically calculates the overall score, saves slider
-  values to localStorage, restores them on reload, and provides links to
-  resources. The “Open Learning Guide” button has been removed.
--->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Self‑Reliance Progress Tracker</title>
     <style>
-      /* Colour palette and base styles */
       :root {
         --accent: #ff6a00;
         --accent-light: #ff9a40;
@@ -58,7 +50,6 @@
         margin: 0 auto;
         padding: 2rem 1rem;
       }
-      /* Slider container */
       .slider-group {
         display: flex;
         align-items: center;
@@ -83,11 +74,9 @@
         border-radius: 3px;
         outline: none;
         margin: 0 0.5rem;
-        position: relative;
       }
       .slider-group input[type="range"]::-webkit-slider-thumb {
         -webkit-appearance: none;
-        appearance: none;
         width: 16px;
         height: 16px;
         border-radius: 50%;
@@ -110,7 +99,6 @@
         font-weight: 600;
         color: var(--accent);
       }
-      /* Score display */
       .score-section {
         margin-top: 2rem;
         text-align: center;
@@ -134,7 +122,6 @@
         background-color: var(--card);
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
-      /* Links and buttons */
       .external-link {
         margin-top: 2rem;
         text-align: center;
@@ -151,7 +138,6 @@
         border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.2s ease;
-        appearance: none;
         display: inline-block;
         text-decoration: none;
       }
@@ -172,7 +158,6 @@
   </head>
   <body>
     <header>
-      <!-- Upload motif.png into the repository alongside this file -->
       <img
         src="motif.png"
         alt="Decorative motif for the self‑reliance tracker"
@@ -181,12 +166,7 @@
       />
       <h1>Self‑Reliance Progress Tracker</h1>
       <p>
-        Use the sliders below to assess how you're developing key skills for
-        independent living during your final year at university. Each slider
-        represents an evidence‑based component of self‑reliance drawn from
-        contemporary educational and psychological research. Your overall
-        score updates automatically as you adjust the values, and your progress
-        is saved in your browser.
+        Use the sliders below to assess how you're developing key skills for independent living during your final year at university. Each slider represents an evidence‑based component of self‑reliance. Your overall score updates automatically, and your progress is saved in your browser.
       </p>
     </header>
     <main>
@@ -248,8 +228,7 @@
       </section>
       <section class="external-link">
         <p>
-          Looking for more insight? Visit the Milk & Gin resources page for
-          additional materials.
+          Looking for more insight? Visit the Milk&nbsp;&amp;&nbsp;Gin resources page for additional materials.
         </p>
         <a
           href="https://www.milkandgin.co.uk/resources"
@@ -268,37 +247,37 @@
     </footer>
     <script>
       // Self‑Reliance Progress Tracker logic with persistence
-      document.addEventListener('DOMContentLoaded', () => {
-        const sliderForm = document.getElementById('sliderForm');
-        const scoreDisplay = document.getElementById('scoreDisplay');
-        const sliders = sliderForm.querySelectorAll('input[type="range"]');
-        const saveButton = document.getElementById('saveBtn');
-        const storageKey = 'selfRelianceProgress';
+      document.addEventListener('DOMContentLoaded', function() {
+        var sliderForm = document.getElementById('sliderForm');
+        var scoreDisplay = document.getElementById('scoreDisplay');
+        var sliders = sliderForm.querySelectorAll('input[type="range"]');
+        var saveButton = document.getElementById('saveBtn');
+        var storageKey = 'selfRelianceProgress';
 
         function computeAndUpdate() {
-          let total = 0;
-          sliders.forEach((slider) => {
+          var total = 0;
+          sliders.forEach(function(slider) {
             total += Number(slider.value);
           });
-          const average = total / sliders.length;
-          const percent = Math.round((average / 10) * 100);
-          scoreDisplay.textContent = `${percent}%`;
+          var average = total / sliders.length;
+          var percent = Math.round((average / 10) * 100);
+          scoreDisplay.textContent = percent + '%';
         }
 
         function saveProgress() {
-          const data = {};
-          sliders.forEach((slider) => {
+          var data = {};
+          sliders.forEach(function(slider) {
             data[slider.id] = slider.value;
           });
           localStorage.setItem(storageKey, JSON.stringify(data));
         }
 
         function restoreProgress() {
-          const stored = localStorage.getItem(storageKey);
+          var stored = localStorage.getItem(storageKey);
           if (stored) {
             try {
-              const data = JSON.parse(stored);
-              sliders.forEach((slider) => {
+              var data = JSON.parse(stored);
+              sliders.forEach(function(slider) {
                 if (data.hasOwnProperty(slider.id)) {
                   slider.value = data[slider.id];
                 }
@@ -309,23 +288,21 @@
           }
         }
 
-        // Restore saved values and set up event listeners
         restoreProgress();
-        sliders.forEach((slider) => {
-          const output = document.getElementById(\`\${slider.id}Val\`);
+        sliders.forEach(function(slider) {
+          var output = document.getElementById(slider.id + 'Val');
           output.textContent = slider.value;
-          slider.addEventListener('input', () => {
+          slider.addEventListener('input', function() {
             output.textContent = slider.value;
             computeAndUpdate();
-            saveProgress(); // Auto-save on change
+            saveProgress();
           });
         });
 
-        computeAndUpdate(); // Compute initial score
+        computeAndUpdate();
 
-        // Manual save button
         if (saveButton) {
-          saveButton.addEventListener('click', () => {
+          saveButton.addEventListener('click', function() {
             saveProgress();
             alert('Your progress has been saved locally.');
           });

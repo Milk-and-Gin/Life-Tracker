@@ -1,17 +1,10 @@
 <!DOCTYPE html>
 <!--
-  Self‑Reliance Progress Tracker – Final Version
-
-  This single HTML file contains everything needed to deploy the self‑reliance
-  tracker web app. It addresses earlier issues: slider movements immediately
-  update the overall score, progress is automatically saved via localStorage,
-  and buttons open their target URLs in new tabs. A manual "Save Progress"
-  button is included. When the page loads, saved values are restored.
-
-  To use: upload this file (and motif.png if you wish to use an external
-  graphic instead of the embedded one) to the root of your GitHub Pages
-  repository, add an empty file named `.nojekyll` to bypass Jekyll, and set
-  the Pages source to the root of the `main` branch.
+  Self‑Reliance Progress Tracker – Version without “Open Learning Guide”
+  This file defines a self‑reliance tracker web app that uses sliders to assess
+  ten competencies. It automatically calculates the overall score, saves slider
+  values to localStorage, restores them on reload, and provides links to
+  resources. The “Open Learning Guide” button has been removed.
 -->
 <html lang="en">
   <head>
@@ -192,8 +185,8 @@
         independent living during your final year at university. Each slider
         represents an evidence‑based component of self‑reliance drawn from
         contemporary educational and psychological research. Your overall
-        score updates automatically as you adjust the values. Your progress is
-        saved automatically and restored when you return.
+        score updates automatically as you adjust the values, and your progress
+        is saved in your browser.
       </p>
     </header>
     <main>
@@ -255,16 +248,9 @@
       </section>
       <section class="external-link">
         <p>
-          Looking for more insight? Explore the resources below for additional
-          material on self‑reliance and independent learning.
+          Looking for more insight? Visit the Milk & Gin resources page for
+          additional materials.
         </p>
-        <a
-          href="https://corp.kaltura.com/blog/independent-learning/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Open Learning Guide
-        </a>
         <a
           href="https://www.milkandgin.co.uk/resources"
           target="_blank"
@@ -323,12 +309,10 @@
           }
         }
 
-        // Restore any saved values before binding events
+        // Restore saved values and set up event listeners
         restoreProgress();
-
-        // Attach input listeners to update outputs, compute score and save progress
         sliders.forEach((slider) => {
-          const output = document.getElementById(`${slider.id}Val`);
+          const output = document.getElementById(\`\${slider.id}Val\`);
           output.textContent = slider.value;
           slider.addEventListener('input', () => {
             output.textContent = slider.value;
